@@ -1,0 +1,70 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<div class="dashboard-container">
+  <h1>Admin DashBoard</h1>
+    <!-- Top summary boxes -->
+    <div class="stats-container">
+        <div class="stat-box green">
+            <h3>Total Morphed</h3>
+            <p>{{ morphed_detections }}</p>
+        </div>
+        <div class="stat-box red">
+            <h3>Total Detections</h3>
+            <p>{{ total_detections }}</p>
+        </div>
+        <div class="stat-box yellow">
+            <h3>Detection Accuracy</h3>
+            <p>{{ detection_accuracy }}%</p>
+        </div>
+        <div class="stat-box blue">
+            <h3>Total Users</h3>
+            <p>{{ total_users }}</p>
+        </div>
+    </div>
+
+    <!-- History Table -->
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>User</th>
+                    <th>Result</th>
+                    <th>Confidence</th>
+                    <th>Date</th>
+                    <th>Image</th>
+                </tr>
+            </thead>
+            <tbody>
+              {% for item in history_data %}
+<tr>
+    <td>{{ item.id }}</td>
+    <td>{{ item.user.username }}</td>
+    <td class="{{ 'morphed' if item.result=='Morphed' else 'genuine' }}">
+                    {% if item.result == 'Genuine' %}
+                        ✔ {{ item.result }}
+                    {% else %}
+                        ✖ {{ item.result }}
+                    {% endif %}
+                </td>
+    <td>{{ item.confidence }}%</td>
+    <td>{{ item.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+    <td>
+        {% if item.image_path %}
+        <img src="{{ url_for('static', filename=item.image_path.split('static/')[-1]) }}" width="50">
+        {% endif %}
+    </td>
+</tr>
+{% endfor %}
+            </tbody>
+        </table>
+    </div>
+     <!-- Logout Button at Bottom -->
+  <div class="logout-container" style="text-align:center; margin-top:30px;">
+      <form method="GET" action="/logout">
+          <button type="submit" style="padding:12px 25px; background-color:#dc3545; color:white; border:none; border-radius:8px; cursor:pointer; font-size:16px;">
+              Logout
+          </button>
+      </form>
+  </div>
+
+</div>

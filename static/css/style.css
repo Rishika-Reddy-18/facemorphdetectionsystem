@@ -1,0 +1,289 @@
+
+/* ===== GLOBAL ===== */
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #f4f6f9;   /* light grey background */
+    margin: 20px;
+    overflow:auto;
+}
+
+/* ===== HEADINGS ===== */
+h2 {
+    background: linear-gradient(to right, #2b6cb0, #3182ce);
+    color: white;
+    padding: 12px;
+    border-radius: 6px;
+    text-align: center;
+}
+
+h3 {
+    color: #2d3748;
+    margin-top: 20px;
+}
+
+/* ===== STATS BOX ===== */
+div[style] {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+/* individual stat cards */
+div[style] p {
+    flex: 1;
+    padding: 15px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+}
+
+/* COLORS FOR CARDS */
+div[style] p:nth-child(1) { background: #38a169; }   /* Total - green */
+div[style] p:nth-child(2) { background: #e53e3e; }   /* Morphed - red */
+div[style] p:nth-child(3) { background: #d69e2e; }   /* Accuracy - yellow */
+div[style] p:nth-child(4) { background: #3182ce; }   /* Users - blue */
+
+
+/* ===== TABLE ===== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: auto;
+}
+
+thead {
+    background: #2b6cb0;
+    color: white;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* ===== RESULT COLORS ===== */
+td:nth-child(3) {
+    font-weight: bold;
+}
+
+td:nth-child(3):contains("Morphed") {
+    color: red;
+}
+
+td:nth-child(3):contains("Genuine") {
+    color: green;
+}
+
+/* fallback for Jinja (IMPORTANT) */
+.morphed { color: red; font-weight: bold; }
+.genuine { color: green; font-weight: bold; }
+
+/* ===== IMAGE ===== */
+img {
+    border-radius: 5px;
+}
+
+/* ===== CHATBOT ===== */
+#chat-box {
+    border: 1px solid #ccc;
+    background: white;
+    padding: 10px;
+    height: 250px;
+    overflow-y: auto;
+    border-radius: 6px;
+}
+
+.user-msg {
+    color: #2b6cb0;
+    font-weight: bold;
+}
+
+.bot-msg {
+    color: #38a169;
+    font-weight: bold;
+}
+
+/* ===== INPUT ===== */
+#user-input {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background: #3182ce;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #2b6cb0;
+}
+/* Basic reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Body background and center alignment */
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f0f4f8; /* light professional background */
+}
+
+/* Login container styling */
+.login-container {
+    background: #fff;
+    padding: 40px 50px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 350px;
+}
+
+/* Heading */
+.login-container h2 {
+    margin-bottom: 30px;
+    color: #007BFF; /* blue professional color */
+}
+
+/* Form styling */
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-form input {
+    padding: 12px 15px;
+    margin-bottom: 20px; /* gap between inputs */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+/* Buttons */
+.login-form button {
+    padding: 12px 15px;
+    background-color: #007BFF; /* same blue as heading */
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.login-form button:hover {
+    background-color: #0056b3; /* darker blue on hover */
+}
+
+/* Register link */
+.register-link {
+    margin-top: 20px;
+}
+
+.register-link a {
+    text-decoration: none;
+    color: #007BFF;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+.dashboard-container {
+    width: 90%;
+    margin: 40px auto;
+}
+
+/* Summary Boxes */
+.stats-container {
+    display: flex;
+    justify-content: space-between; /* horizontal spacing */
+    flex-wrap: wrap;
+    margin-bottom: 30px; /* space between boxes and table */
+}
+
+.stat-box {
+    flex: 1 1 20%; /* responsive width */
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    margin: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.stat-box.green { background-color: #28a745; }   /* Morphed */
+.stat-box.red { background-color: #dc3545; }     /* Total Detections */
+.stat-box.yellow { background-color: #ffc107; }  /* Detection Accuracy */
+.stat-box.blue { background-color: #17a2b8; }    /* Total Users */
+
+/* Table Styling */
+.table-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #007BFF;
+    color: #fff;
+}
+
+th, td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f0f4f8;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    /* CHANGE */
+    min-height: 100vh;
+    flex-direction: column; /* allow content stacking */
+    overflow-y: auto; /* ✅ allows vertical scrolling */
+}
+
+.dashboard-container {
+    background: #fff;
+    margin: 40px 0;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    width: 900px;
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh; /* optional: prevents container from being too tall */
+}

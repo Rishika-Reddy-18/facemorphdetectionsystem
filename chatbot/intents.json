@@ -1,0 +1,14 @@
+{
+  "intents": [
+    {
+      "tag": "morph",
+      "patterns": ["What is morphing?", "Explain morph detection"],
+      "responses": ["Face morphing is blending two faces into one."]
+    },
+    {
+      "tag": "upload",
+      "patterns": ["How to upload image?", "Upload help"],
+      "responses": ["Go to dashboard and upload your image."]
+    }
+  ]
+}

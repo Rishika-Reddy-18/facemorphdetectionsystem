@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>User Dashboard - Face Morph Detection System</title>
+<style>
+body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f4f8; margin: 0; padding: 0; overflow-y: auto; }
+.dashboard-container { background: #fff; max-width: 900px; width: 90%; margin: 40px auto; padding: 30px 40px; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); display: flex; flex-direction: column; min-height: 80vh; position: relative; }
+.logout-btn { position: absolute; top: 20px; right: 20px; }
+.logout-btn button { padding: 8px 14px; border-radius: 8px; border: none; background-color: #dc3545; color: #fff; cursor: pointer; }
+.logout-btn button:hover { background-color: #a71d2a; }
+h2 { text-align: center; color: #007BFF; margin-bottom: 30px; }
+.content { display: flex; flex-wrap: wrap; gap: 30px; }
+.left-panel, .right-panel { flex: 1; display: flex; flex-direction: column; gap: 20px; }
+.upload-form input[type="file"], #user-input { padding: 10px; border-radius: 8px; border: 1px solid #ccc; width: 100%; }
+.upload-form button, .chat-form button { padding: 12px 20px; border-radius: 8px; border: none; background-color: #007BFF; color: #fff; cursor: pointer; }
+.upload-form button:hover, .chat-form button:hover { background-color: #0056b3; }
+.result-section img, .explainability img { max-width: 100%; border-radius: 8px; }
+.morphed { color: red; font-weight: bold; }
+.genuine { color: green; font-weight: bold; }
+#chat-box { border: 1px solid #ccc; border-radius: 8px; background: #f9f9f9; padding: 10px; height: 180px; overflow-y: auto; }
+.chat-form { display: flex; margin-top: 5px; gap: 10px; }
+.user-msg { color: #2b6cb0; font-weight: bold; margin: 5px 0; }
+.bot-msg { color: #38a169; font-weight: bold; margin: 5px 0; }
+</style>
+</head>
+<body>
+<div class="dashboard-container">
+    <div class="logout-btn">
+        <form method="GET" action="/logout">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+    <h2>Face Morph Detection System</h2>
+    <div class="content">
+        <div class="left-panel">
+            <form class="upload-form" method="POST" enctype="multipart/form-data">
+                <input type="file" name="image" required>
+                <button type="submit">Upload</button>
+            </form>
+            {% if result %}
+            <div class="result-section">
+                <h3>Result: <span class="{{ 'morphed' if result=='Morphed' else 'genuine' }}">{{ result }}</span></h3>
+                <p>Confidence: {{ confidence }}%</p>
+                <h4>Uploaded Image:</h4>
+                <img src="{{ image }}" alt="Uploaded Image">
+            </div>
+            {% endif %}
+        </div>
+        <div class="right-panel">
+            {% if heatmap %}
+            <div class="explainability">
+                <h4>Heatmap / Explainability</h4>
+                <img src="{{ heatmap }}" alt="Heatmap">
+            </div>
+            {% endif %}
+            <div class="explainability">
+                <h4>AI Chatbot</h4>
+                <div id="chat-box"></div>
+                <div class="chat-form">
+                    <input type="text" id="user-input" placeholder="Ask about morphing...">
+                    <button type="button" onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+async function sendMessage() {
+    const inputBox = document.getElementById("user-input");
+    const chatBox = document.getElementById("chat-box");
+    const message = inputBox.value.trim();
+    if (!message) return;
+    const userMsg = document.createElement("div");
+    userMsg.className = "user-msg";
+    userMsg.textContent = "You: " + message;
+    chatBox.appendChild(userMsg);
+    inputBox.value = "";
+    chatBox.scrollTop = chatBox.scrollHeight;
+    const response = await fetch("/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "msg=" + encodeURIComponent(message)
+    });
+    const answer = await response.text();
+    const botMsg = document.createElement("div");
+    botMsg.className = "bot-msg";
+    botMsg.textContent = "Bot: " + answer;
+    chatBox.appendChild(botMsg);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+</script>
+</body>
+</html>
