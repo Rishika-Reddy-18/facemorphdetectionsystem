@@ -12,10 +12,34 @@ app.config['SECRET_KEY'] = "supersecretkey123"
 db.init_app(app)
 
 # ================== LOAD MODEL ==================
-model = tf.keras.models.load_model("models/morph_model.h5")
+model = tf.keras.Sequential([
+    tf.keras.layers.Conv2D(32, (3,3), activation='relu', input_shape=(128,128,3)),
+    tf.keras.layers.MaxPooling2D(),
+
+    tf.keras.layers.Conv2D(64, (3,3), activation='relu'),
+    tf.keras.layers.MaxPooling2D(),
+
+    tf.keras.layers.Conv2D(128, (3,3), activation='relu'),
+    tf.keras.layers.MaxPooling2D(),
+
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dense(128, activation='relu'),
+    tf.keras.layers.Dropout(0.5),
+
+    tf.keras.layers.Dense(1, activation='sigmoid')
+])
+
+# Build model before loading weights
+model.build((None, 128, 128, 3))
+
+# Load weights from saved file
+model.load_weights("models/morph_model.h5")
+
+# Warm up model
 dummy = np.zeros((1,128,128,3), dtype=np.float32)
 _ = model(dummy, training=False)
 
+print("✅ Model weights loaded successfully")
 # ================== HEATMAP FUNCTION ==================
 def get_heatmap(model, img_array):
     if len(img_array.shape) == 3:
